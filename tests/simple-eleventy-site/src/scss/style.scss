@@ -1,0 +1,9 @@
+@use "@ulu/frontend/lib/scss" as ulu;
+
+@include ulu.button-set-config((
+  "border-radius": 0px
+));
+
+@include ulu.base-styles();
+@include ulu.component-styles();
+@include ulu.helper-styles();
