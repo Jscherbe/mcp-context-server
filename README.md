@@ -76,17 +76,21 @@ Point your AI's MCP configuration (e.g., Gemini CLI, Claude Desktop, Cursor) to 
 
 ## Usage for Advanced Users (Programmatic)
 
-For custom servers, advanced tooling, or HTTP hosting, you can instantiate the server manually, pass in the provider objects, and provide a custom transport layer.
+For custom servers, advanced tooling, or HTTP hosting, you can instantiate the server manually, pass in the provider objects, and provide a custom transport layer. 
+
+The `providers` array accepts any standard JavaScript object that conforms to the Task-Driven schema, regardless of how it was generated or imported.
 
 ```javascript
 import { ContextServer } from "@ulu/mcp-context-server";
-// Import the provider data directly via the semantic subpath
-import vanillaProvider from "@ulu/frontend/ulu-mcp-provider";
+// Import provider data (can be JSON, a JS module, or dynamically fetched)
+import vanillaProvider from "@ulu/frontend/ulu-mcp-provider" with { type: "json" };
+import myCustomProvider from "./my-custom-provider.js";
 
 const server = new ContextServer({
   serverName: "my-custom-context-server",
   providers: [
-    vanillaProvider
+    vanillaProvider,
+    myCustomProvider
   ]
 });
 
@@ -98,22 +102,33 @@ server.start();
 
 ## Building a Provider (For Library Authors)
 
-If you are creating a new package within the ULU ecosystem, you must expose an object that conforms to the Task-Driven schema.
+This package is designed to be open-ended. **Any UI library, design system, or frontend framework** can implement the Task-Driven schema to provide perfect AI context for their users.
 
-### 1. Package Export
+To become a provider, you must expose a **pure JSON** object that conforms to the schema. While the programmatic API accepts any JS object, exporting a pure JSON file ensures that your documentation can be easily fetched over a network by future HTTP-based web agents without requiring a JavaScript runtime.
 
-Your `package.json` must map the `"exports"` field to expose a specific `"./ulu-mcp-provider"` subpath:
+### 1. Build-Time Generation
+
+During your library's build step, output an `mcp-data.json` file containing the necessary metadata (`name`, `prefix`) alongside the required `snippets`, `configuration`, `reference`, and `guides` objects.
 
 ```json
 {
-  "name": "@ulu/my-new-library",
+  "name": "@my-org/my-ui-library",
+  "prefix": "my_ui",
+  "snippets": { ... },
+  "configuration": { ... }
+}
+```
+
+### 2. Package Export
+
+Your `package.json` must map the `"exports"` field to expose this specific JSON file via the `"./ulu-mcp-provider"` subpath:
+
+```json
+{
+  "name": "@my-org/my-ui-library",
   "exports": {
     ".": "./dist/index.js",
     "./ulu-mcp-provider": "./dist/mcp-data.json"
   }
 }
 ```
-
-### 2. Provider Schema
-
-To prevent bloating this runtime engine, the build-time parsing utilities (SassDoc/JSDoc) are maintained in separate dual-purpose documentation generators. Use those tools during your library's build step to output a JSON object containing the required `snippets`, `configuration`, `reference`, and `guides` objects.
