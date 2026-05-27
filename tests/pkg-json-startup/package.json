@@ -1,0 +1,10 @@
+{
+  "name": "test-pkg-json",
+  "version": "1.0.0",
+  "type": "module",
+  "ulu-mcp": {
+    "providers": [
+      "@ulu/frontend"
+    ]
+  }
+}

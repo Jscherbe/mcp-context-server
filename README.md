@@ -2,6 +2,21 @@
 
 A lightweight engine (powered by the Model Context Protocol) designed to bridge the gap between AI agents and complex frontend library ecosystems.
 
+**Table of Contents:**
+- [The Problem](#the-problem)
+- [The Solution](#the-solution)
+  - [1. Task-Driven Context (TDC)](#1-task-driven-context-tdc)
+  - [2. Distributed Provider Model](#2-distributed-provider-model)
+- [Usage for End Users](#usage-for-end-users)
+  - [1. Installation](#1-installation)
+  - [2. Configuration](#2-configuration)
+  - [3. Connect your AI Agent](#3-connect-your-ai-agent)
+- [Usage for Advanced Users (Programmatic)](#usage-for-advanced-users-programmatic)
+- [Building a Provider (For Library Authors)](#building-a-provider-for-library-authors)
+  - [1. Build-Time Generation](#1-build-time-generation)
+  - [2. Package Export](#2-package-export)
+
+
 ## The Problem
 
 Exposing a large UI library to an AI agent is challenging. Throwing raw source code or unstructured Markdown at an LLM quickly overwhelms its context window, leading to hallucinations and degraded performance. For humans, we build regular documentation (HTML websites). For AI, we need **Task-Driven Context**.
@@ -43,7 +58,9 @@ npm install -D @ulu/mcp-context-server
 
 ### 2. Configuration
 
-Create a `ulu-mcp.config.js` file at the root of your project. Provide an array of the ULU packages you have installed.
+You can configure the server either by creating a `ulu-mcp.config.js` file at the root of your project or by adding an `"ulu-mcp"` property to your `package.json`.
+
+**Option A: `ulu-mcp.config.js`**
 
 ```javascript
 export default {
@@ -53,7 +70,21 @@ export default {
   ]
 };
 ```
-*Behind the scenes, the CLI dynamically attempts to import the `@ulu/frontend/ulu-mcp-provider` subpath.*
+
+**Option B: `package.json`**
+
+```json
+{
+  "ulu-mcp": {
+    "providers": [
+      "@ulu/frontend",
+      "@ulu/frontend-vue"
+    ]
+  }
+}
+```
+
+*Behind the scenes, the CLI loads your configuration and dynamically attempts to import the `[package-name]/ulu-mcp-provider` subpath.*
 
 ### 3. Connect your AI Agent
 
