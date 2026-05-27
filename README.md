@@ -88,16 +88,16 @@ export default {
 
 ### 3. Connect your AI Agent
 
-Point your AI's MCP configuration (e.g., Gemini CLI, Claude Desktop, Cursor) to the local CLI binary using `npx`:
+Point your AI's MCP configuration (e.g., Gemini CLI, Claude Desktop, Cursor) to the local CLI binary using `npx`.
+
+**Example configuring gemini-cli:**
 
 ```json
 {
-  "mcp": {
-    "servers": {
-      "ulu-context": {
-        "command": "npx",
-        "args": ["ulu-mcp"]
-      }
+  "mcpServers" : {
+    "ulu": {
+      "command": "npx",
+      "args": ["ulu-mcp"]
     }
   }
 }
