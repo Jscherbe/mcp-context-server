@@ -1,8 +1,16 @@
 {
   "name": "@ulu/mcp-context-server",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "An agnostic Model Context Protocol (MCP) engine that exposes task-driven frontend documentation to AI agents via distributed UI library providers.",
   "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "bin"
+  ],
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,7 +26,12 @@
     "documentation",
     "frontend"
   ],
+  "author": "Jscherbe",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jscherbe/mcp-context-server.git"
+  },
   "bugs": {
     "url": "https://github.com/Jscherbe/mcp-context-server/issues"
   },
