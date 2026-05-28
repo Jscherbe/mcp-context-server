@@ -1,6 +1,6 @@
 {
   "name": "@ulu/mcp-context-server",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An agnostic Model Context Protocol (MCP) engine that exposes task-driven frontend documentation to AI agents via distributed UI library providers.",
   "main": "index.js",
   "exports": {
