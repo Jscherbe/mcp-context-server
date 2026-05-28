@@ -43,5 +43,8 @@
   },
   "bin": {
     "ulu-mcp": "./bin/ulu-mcp.js"
+  },
+  "devDependencies": {
+    "@ulu/frontend": "^0.6.10"
   }
 }
